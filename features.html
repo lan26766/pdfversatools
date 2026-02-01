@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - PDF TreasureBox Pro</title>
+    <meta name="description" content="Discover the powerful features of PDF TreasureBox Pro - format conversion, PDF security, batch processing, and more. The ultimate PDF solution for professionals.">
+    <meta name="keywords" content="PDF features, PDF converter, PDF edit, PDF compression, merge PDF, batch processing, PDF security">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #3b82f6;
+            --accent-glow: #60a5fa;
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-primary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 160px;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .section-title p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: -100px;
+        }
+        
+        .feature-detail {
+            margin: 100px 0;
+        }
+        
+        .feature-detail:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-detail {
+                flex-direction: column;
+            }
+            
+            .feature-detail:nth-child(even) {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="text-xl font-bold">PDF TreasureBox Pro</span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link font-medium">Home</a>
+                <a href="features.html" class="nav-link font-medium">Features</a>
+                <a href="download.html" class="nav-link font-medium">Download</a>
+                <a href="blog.html" class="nav-link font-medium">Blog</a>
+                <a href="about.html" class="nav-link font-medium">About</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="https://pdfwhirl.gumroad.com/l/uqkace" class="btn-primary bg-gradient-to-r from-purple-600 to-pink-500">Buy Now</a>
+                <a href="https://www.dingshibaofang.com/files/PDFTreasureBox-Setup-x64.exe" class="btn-primary">Download Now</a>
+                <button class="md:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="py-32">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Powerful <span class="gradient-text">Features</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+                Comprehensive PDF tools designed to simplify your workflow and boost productivity
+            </p>
+            <div class="glass inline-block p-1 rounded-full">
+                <div class="flex bg-gray-900 rounded-full p-1">
+                    <button class="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium">
+                        All Features
+                    </button>
+                    <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                        Conversion
+                    </button>
+                    <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                        Security
+                    </button>
+                    <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                        Batch Processing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Grid -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="file-up" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Format Conversion</h3>
+                    <p class="text-gray-400 mb-6">
+                        Convert PDF to Word, Excel, PowerPoint, images, HTML, and plain text while preserving original layout.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF to Word (.docx)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF to Excel (.xlsx)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF to PowerPoint (.pptx)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF to Images (.png/.jpg)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF to HTML & Text</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="lock" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">PDF Security</h3>
+                    <p class="text-gray-400 mb-6">
+                        Encrypt, decrypt, set permissions, and secure your PDF documents with advanced security features.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF Encryption</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF Decryption</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Permission Settings</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Watermark Addition</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Digital Signatures</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="layers" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Batch Processing</h3>
+                    <p class="text-gray-400 mb-6">
+                        Process hundreds of PDF files simultaneously with batch conversion, watermarking, and compression.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Batch PDF Conversion</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Batch Watermarking</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Batch PDF Compression</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Folder-wide Processing</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Progress Tracking</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="file-plus" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Create PDF</h3>
+                    <p class="text-gray-400 mb-6">
+                        Convert multiple images to PDF with customizable settings and quality options.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Image to PDF Conversion</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Image Sorting</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Quality Adjustment</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Page Size Settings</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Batch Image Processing</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="toolbox" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">PDF Toolbox</h3>
+                    <p class="text-gray-400 mb-6">
+                        Advanced tools for PDF editing, comparison, and other specialized tasks.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Batch Watermarking</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF Editing</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF Comparison</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Page Rotation</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>PDF Splitting & Merging</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="glass p-8 rounded-2xl feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="settings" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Advanced Features</h3>
+                    <p class="text-gray-400 mb-6">
+                        Modern UI, high performance, and comprehensive configuration options.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Modern UI with Dark Mode</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Multi-threaded Processing</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Task Queue Management</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Detailed Error Handling</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>JSON Configuration</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Feature Details -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <!-- Feature Detail 1 -->
+            <div class="feature-detail flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="glass p-4 rounded-2xl">
+                        <img src="images/PIC002.png" alt="PDF Conversion Interface" class="rounded-xl w-full">
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                        Seamless <span class="gradient-text">Format Conversion</span>
+                    </h3>
+                    <p class="text-gray-300 mb-8">
+                        Convert PDF files to various formats while preserving the original layout, fonts, and images. 
+                        Our advanced conversion engine ensures high-quality results every time.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="file-text" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Preserve Original Layout</h4>
+                                <p class="text-gray-400">
+                                    Maintain the exact formatting, fonts, and images from your original PDF
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="zap" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Fast Conversion Speed</h4>
+                                <p class="text-gray-400">
+                                    Multi-threaded processing for quick and efficient conversions
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="layers" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Batch Processing</h4>
+                                <p class="text-gray-400">
+                                    Convert multiple PDF files at once with our powerful batch processing feature
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feature Detail 2 -->
+            <div class="feature-detail flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                        Advanced <span class="gradient-text">PDF Security</span>
+                    </h3>
+                    <p class="text-gray-300 mb-8">
+                        Protect your sensitive PDF documents with industry-standard encryption and permission settings. 
+                        Keep your information secure from unauthorized access.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="lock" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Strong Encryption</h4>
+                                <p class="text-gray-400">
+                                    AES-256 encryption to secure your PDF documents
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="shield" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Permission Settings</h4>
+                                <p class="text-gray-400">
+                                    Control who can view, print, edit, or copy content from your PDFs
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="unlock" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Decryption</h4>
+                                <p class="text-gray-400">
+                                    Unlock password-protected PDF files when you have the correct password
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="glass p-4 rounded-2xl">
+                        <img src="images/PIC003.png" alt="PDF Security Features" class="rounded-xl w-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feature Detail 3 -->
+            <div class="feature-detail flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="glass p-4 rounded-2xl">
+                        <img src="images/PIC004.png" alt="Batch Processing Interface" class="rounded-xl w-full">
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                        Powerful <span class="gradient-text">Batch Processing</span>
+                    </h3>
+                    <p class="text-gray-300 mb-8">
+                        Process hundreds of PDF files simultaneously with our batch processing feature. 
+                        Save time and effort with automated workflows.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="folder" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Folder-wide Processing</h4>
+                                <p class="text-gray-400">
+                                    Process entire folders of PDF files with a single click
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="bar-chart-2" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Progress Tracking</h4>
+                                <p class="text-gray-400">
+                                    Real-time progress updates for all batch operations
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="repeat" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Automated Workflows</h4>
+                                <p class="text-gray-400">
+                                    Set up automated batch processes for recurring tasks
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="glass p-12 rounded-3xl text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Transform Your PDF Workflow?
+                </h2>
+                <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Join thousands of professionals who trust PDF TreasureBox Pro for their daily PDF needs. 
+                    Download now and experience the difference.
+                </p>
+                <a href="https://www.dingshibaofang.com/files/PDFTreasureBox-Setup-x64.exe" class="btn-primary text-lg py-4 px-8">
+                    Download PDF TreasureBox Pro
+                </a>
+                <p class="mt-4 text-sm text-gray-400">
+                    Free 7-day trial • No credit card required
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">PDF TreasureBox Pro</span>
+                </div>
+                
+                <div class="flex space-x-8 mb-6 md:mb-0">
+                    <a href="index.html" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="features.html" class="text-gray-400 hover:text-white transition">Features</a>
+                    <a href="download.html" class="text-gray-400 hover:text-white transition">Download</a>
+                    <a href="blog.html" class="text-gray-400 hover:text-white transition">Blog</a>
+                    <a href="about.html" class="text-gray-400 hover:text-white transition">About</a>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">
+                    © 2026 PDF TreasureBox Pro. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#3b82f6"
+                },
+                shape: {
+                    type: "circle",
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#3b82f6",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate feature cards
+        gsap.utils.toArray('.feature-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom-=100'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Animate feature details
+        gsap.utils.toArray('.feature-detail').forEach((detail, i) => {
+            gsap.from(detail, {
+                scrollTrigger: {
+                    trigger: detail,
+                    start: 'top bottom-=100'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        });
+    </script>
+</body>
+</html>

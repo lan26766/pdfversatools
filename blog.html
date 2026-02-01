@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - PDF TreasureBox Pro</title>
+    <meta name="description" content="PDF TreasureBox Pro blog - Tutorials, tips, and guides for PDF processing, conversion, and management. Learn how to use our PDF tools effectively.">
+    <meta name="keywords" content="PDF tutorials, PDF conversion guide, PDF editing tips, batch processing PDF, PDF security guide">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #3b82f6;
+            --accent-glow: #60a5fa;
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-primary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .blog-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .blog-image {
+            transition: all 0.5s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            space-x: 4;
+            margin-bottom: 12px;
+        }
+        
+        .blog-category {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .blog-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .blog-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .blog-read-more {
+            display: inline-flex;
+            align-items: center;
+            space-x: 8px;
+            color: var(--accent);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-read-more:hover {
+            color: var(--accent-glow);
+            transform: translateX(4px);
+        }
+        
+        .blog-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .blog-section {
+                padding: 60px 0;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="text-xl font-bold">PDF TreasureBox Pro</span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link font-medium">Home</a>
+                <a href="features.html" class="nav-link font-medium">Features</a>
+                <a href="download.html" class="nav-link font-medium">Download</a>
+                <a href="blog.html" class="nav-link font-medium">Blog</a>
+                <a href="about.html" class="nav-link font-medium">About</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="https://pdfwhirl.gumroad.com/l/uqkace" class="btn-primary bg-gradient-to-r from-purple-600 to-pink-500">Buy Now</a>
+                <a href="https://www.dingshibaofang.com/files/PDFTreasureBox-Setup-x64.exe" class="btn-primary">Download Now</a>
+                <button class="md:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Blog Hero Section -->
+    <section class="blog-section py-32">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    PDF <span class="gradient-text">Tutorials & Guides</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+                    Learn how to make the most of PDF TreasureBox Pro with our comprehensive tutorials and guides
+                </p>
+                <div class="glass inline-block p-1 rounded-full">
+                    <div class="flex bg-gray-900 rounded-full p-1">
+                        <button class="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium">
+                            All Articles
+                        </button>
+                        <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                            Conversion
+                        </button>
+                        <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                            Security
+                        </button>
+                        <button class="px-6 py-2 rounded-full text-gray-400 font-medium hover:text-white transition">
+                            Batch Processing
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20batch%20processing%20interface%20with%20multiple%20files%20being%20processed%20in%20a%20modern%20software%20UI&image_size=square" alt="Batch Processing PDF Files" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Batch Processing</span>
+                        <span class="blog-date">January 20, 2026</span>
+                    </div>
+                    <h3 class="blog-title">How to Process Hundreds of PDF Files with Batch Features</h3>
+                    <p class="blog-excerpt">
+                        Learn how to efficiently process multiple PDF files at once using PDF TreasureBox Pro's batch processing feature. Save time and automate your workflow.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20encryption%20and%20security%20settings%20interface%20in%20modern%20software&image_size=square" alt="PDF Encryption Guide" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Security</span>
+                        <span class="blog-date">January 15, 2026</span>
+                    </div>
+                    <h3 class="blog-title">PDF Encryption and Permission Settings Complete Guide</h3>
+                    <p class="blog-excerpt">
+                        A comprehensive guide to securing your PDF documents with encryption, password protection, and permission settings using PDF TreasureBox Pro.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <!-- Blog Post 3 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20to%20Word%20conversion%20process%20in%20modern%20software%20interface&image_size=square" alt="PDF to Word Conversion" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Conversion</span>
+                        <span class="blog-date">January 10, 2026</span>
+                    </div>
+                    <h3 class="blog-title">How to Convert PDF to Word Without Changing Format</h3>
+                    <p class="blog-excerpt">
+                        Discover the best practices for converting PDF documents to Word while preserving the original formatting, fonts, and layout using PDF TreasureBox Pro.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <!-- Blog Post 4 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20compression%20settings%20interface%20showing%20file%20size%20reduction%20options&image_size=square" alt="PDF Compression" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Optimization</span>
+                        <span class="blog-date">January 5, 2026</span>
+                    </div>
+                    <h3 class="blog-title">PDF Compression to Specific Size: A Step-by-Step Guide</h3>
+                    <p class="blog-excerpt">
+                        Learn how to compress PDF files to a specific size while maintaining quality using PDF TreasureBox Pro's advanced compression settings.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <!-- Blog Post 5 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20splitting%20and%20merging%20interface%20in%20modern%20software&image_size=square" alt="PDF Splitting and Merging" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Editing</span>
+                        <span class="blog-date">December 30, 2025</span>
+                    </div>
+                    <h3 class="blog-title">Free PDF Splitting Software: How to Split PDFs Easily</h3>
+                    <p class="blog-excerpt">
+                        A complete guide to splitting PDF documents into multiple files using PDF TreasureBox Pro's split feature, including advanced splitting options.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <!-- Blog Post 6 -->
+                <div class="glass p-6 rounded-2xl blog-card">
+                    <div class="blog-image mb-6">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=PDF%20editor%20comparison%20chart%20showing%20features%20and%20benefits&image_size=square" alt="PDF Editor Comparison" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-category">Reviews</span>
+                        <span class="blog-date">December 25, 2025</span>
+                    </div>
+                    <h3 class="blog-title">Which PDF Editor is Best for Your Needs?</h3>
+                    <p class="blog-excerpt">
+                        A comprehensive comparison of leading PDF editors, including PDF TreasureBox Pro, to help you choose the best solution for your specific needs.
+                    </p>
+                    <a href="#" class="blog-read-more">
+                        <span>Read more</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <button class="btn-primary">
+                    Load More Articles
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="glass p-12 rounded-3xl text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Stay Updated with PDF Tips & Tricks
+                </h2>
+                <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Subscribe to our newsletter to receive the latest PDF tips, tricks, and software updates directly to your inbox.
+                </p>
+                <div class="max-w-md mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Enter your email" class="flex-1 glass border border-gray-700 rounded-xl px-6 py-4 focus:outline-none focus:border-blue-500">
+                        <button class="btn-primary whitespace-nowrap">
+                            Subscribe Now
+                        </button>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-400">
+                        We respect your privacy. Unsubscribe at any time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">PDF TreasureBox Pro</span>
+                </div>
+                
+                <div class="flex space-x-8 mb-6 md:mb-0">
+                    <a href="index.html" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="features.html" class="text-gray-400 hover:text-white transition">Features</a>
+                    <a href="download.html" class="text-gray-400 hover:text-white transition">Download</a>
+                    <a href="blog.html" class="text-gray-400 hover:text-white transition">Blog</a>
+                    <a href="about.html" class="text-gray-400 hover:text-white transition">About</a>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">
+                    © 2026 PDF TreasureBox Pro. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#3b82f6"
+                },
+                shape: {
+                    type: "circle",
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#3b82f6",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate blog cards
+        gsap.utils.toArray('.blog-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom-=100'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out'
+            });
+        });
+    </script>
+</body>
+</html>
